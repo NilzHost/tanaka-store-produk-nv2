@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TANAKA STORE</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Orbitron',sans-serif;color:white;overflow-x:hidden;}
+
+/* ===== Preloader ===== */
+#preloader{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  background:radial-gradient(circle at top right,#1a0033,#000011 70%);
+  z-index:9999;text-align:center;
+}
+#preloader .logo{
+  width:120px;height:120px;
+  background:url('https://files.catbox.moe/mln47y.jpeg') no-repeat center/contain;
+  filter:drop-shadow(0 0 20px #00ffe0);
+  animation:pulse 3s infinite ease-in-out;
+  margin-bottom:20px;
+}
+@keyframes pulse{
+  0%,100%{transform:scale(1);filter:drop-shadow(0 0 20px #00ffe0);}
+  50%{transform:scale(1.1);filter:drop-shadow(0 0 40px #00ffe0);}
+}
+#preloader .spinner{
+  width:70px;height:70px;border:6px solid rgba(255,255,255,0.2);
+  border-top:6px solid #00ffe0;border-radius:50%;animation:spin 1s linear infinite;
+  margin:25px 0;box-shadow:0 0 25px #00ffe0;
+}
+@keyframes spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+#preloader .loading-text{
+  font-size:2em;font-weight:700;color:#00ffe0;
+  text-shadow:0 0 15px #00ffe0,0 0 30px #0099ff;
+  margin-bottom:15px;
+}
+#preloader .sub-text{color:#bbb;font-size:1em;letter-spacing:1px;}
+
+/* ===== HTML Utama ===== */
+#content{display:none;}
+body{background:#050505;}
+.gradient-bg {position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,#050505,#0a0f1e,#111b2e,#050505);background-size:400% 400%;animation:gradientBG 20s ease infinite;z-index:-2;}
+@keyframes gradientBG {0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+.stars{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;}
+.star{position:absolute;background:#00d9ff;border-radius:50%;animation:twinkle 2s infinite alternate;}
+@keyframes twinkle {0%{opacity:0.2;transform:scale(0.5);}100%{opacity:1;transform:scale(1.5);}}
+body{margin:0;font-family:'Orbitron',sans-serif;color:white;overflow-x:hidden;}
+.hero{text-align:center;padding:30px 15px;}
+.hero-img{width:120px;height:120px;border-radius:50%;border:3px solid #00d9ff;box-shadow:0 0 20px #00d9ff;}
+.hero h1{margin-top:15px;font-size:22px;color:#00d9ff;text-shadow:0 0 15px #00d9ff;}
+.hero h2{font-size:18px;color:#fff;margin-bottom:10px;}
+.hero p{max-width:400px;margin:auto;font-size:13px;line-height:1.5;color:#bbb;}
+.bottom-menu{display:flex;justify-content:space-around;margin:25px 15px;}
+.menu-btn{flex:1;margin:0 5px;text-align:center;padding:15px 0;border-radius:12px;font-weight:bold;text-decoration:none;color:#fff;transition:0.3s;box-shadow:0 0 15px rgba(0,0,0,0.4);cursor:pointer;border:none;}
+.menu-btn.red{background:#ff0000;}
+.menu-btn.darkred{background:#aa0000;}
+.menu-btn.blue{background:#0066ff;}
+.menu-btn.black{background:#111;}
+.menu-btn:hover{transform:translateY(-5px) scale(1.05);box-shadow:0 0 20px #00d9ff,0 0 40px rgba(0,217,255,0.4);}
+h2{text-align:center;color:#00d9ff;text-shadow:0 0 20px #00d9ff;margin:30px 0 15px;font-size:28px;}
+.list-produk-1{display:flex;overflow-x:auto;gap:20px;padding:20px;scroll-behavior:smooth;}
+.list-produk-1::-webkit-scrollbar{display:none;}
+.produk-2-container{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:20px;padding:20px;}
+.produk{background:rgba(17,24,39,0.6);backdrop-filter:blur(10px);border:1px solid rgba(0,217,255,0.5);border-radius:16px;padding:15px;text-align:center;box-shadow:0 0 15px #00d9ff,0 0 40px rgba(0,217,255,0.3);transition:transform 0.3s, box-shadow 0.3s;min-width:200px;margin-bottom:20px;position:relative;overflow:hidden;cursor:pointer;z-index:1;}
+.produk:hover{transform:scale(1.08) rotate(-1deg);box-shadow:0 0 30px #00d9ff,0 0 60px rgba(0,217,255,0.5);}
+.produk img{width:100%;border-radius:10px;margin-bottom:10px;transition:all 0.3s ease;}
+.neon-glow{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;background:radial-gradient(circle, rgba(0,217,255,0.6) 0%, transparent 60%);opacity:0;transition:opacity 0.3s ease, transform 0.3s ease;}
+.produk:hover .neon-glow{opacity:1;}
+.harga{font-size:16px;color:#00ff99;text-shadow:0 0 8px #00ff99,0 0 20px #00ff99;margin:5px 0 10px;font-weight:bold;}
+hr{border:none;height:3px;background:linear-gradient(90deg,transparent,#00d9ff,transparent);margin:30px 0;}
+#produkModal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;opacity:0;pointer-events:none;transition:0.3s;z-index:10;}
+#produkModal.active{opacity:1;pointer-events:auto;}
+.modal-content{background:rgba(17,24,39,0.9);padding:20px;border-radius:16px;max-width:400px;width:90%;text-align:center;box-shadow:0 0 20px #00d9ff;position:relative;}
+.modal-content img{width:100%;border-radius:10px;margin-bottom:10px;}
+.modal-content ul{text-align:left;margin:10px 0;padding-left:20px;color:#00ffff;}
+.close-btn{position:absolute;top:10px;right:10px;background:#ff5555;color:white;border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;font-weight:bold;}
+.btn-container a{display:block;margin:8px 0;padding:10px;border-radius:8px;background:#00d9ff;color:#fff;text-decoration:none;font-weight:bold;}
+.btn-container a:hover{background:#00aacc;}
+.overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);justify-content:center;align-items:center;z-index:100;}
+.popup{background:#111827;padding:20px;border-radius:16px;text-align:center;width:300px;box-shadow:0 0 20px #00d9ff;}
+.popup h2{margin-bottom:15px;color:#00d9ff;}
+.popup .btn{display:block;margin:8px 0;padding:10px;border-radius:8px;background:#00d9ff;color:#fff;text-decoration:none;font-weight:bold;}
+.popup .btn:hover{background:#00aacc;}
+.popup .close-btn{position:static;margin-top:15px;border-radius:8px;width:100%;background:crimson;}
+.bottom-container {text-align:center; margin:30px 15px;}
+.bottom-button-neon {padding: 14px 28px;font-size: 16px;font-weight: bold;color: #00ffff;background: transparent;border: 2px solid #00ffff;border-radius: 12px;cursor: pointer;text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff;box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff inset;transition: 0.3s;}
+.bottom-button-neon:hover {color: #ff00ff;border-color: #ff00ff;text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff;box-shadow: 0 0 20px #ff00ff, 0 0 40px #ff00ff inset;}
+.bottom-thanks {margin-top:12px;font-size:14px;color:#fff;background-color:#000;display:block;width:fit-content;margin-left:auto;margin-right:auto;padding:6px 12px;border-radius:6px;text-shadow: 0 0 5px #00ffff;}
+</style>
+</head>
+<body>
+
+<!-- ===== Preloader ===== -->
+<div id="preloader">
+  <div class="logo"></div>
+  <div class="loading-text">WAIT, MOHON TUNGGU</div>
+  <div class="spinner"></div>
+  <div class="sub-text">WAIT, PROCESSING TO GO TO THE TANAKA STORE PRODUCT PAGE</div>
+</div>
+
+<!-- ===== HTML Utama ===== -->
+<div id="content">
+  <div class="gradient-bg"></div>
+  <div class="stars" id="stars"></div>
+  <header class="hero">
+    <img src="https://files.catbox.moe/mln47y.jpeg" alt="Nilz Logo" class="hero-img">
+    <h1>Hii, WELCOME TO</h1>
+    <h2>LIST ALL PRODUK BY TANAKA STORE</h2>
+    <p>TANAKA STORE MENYEDIAKAN PRODUK-PRODUK YANG BAGUS DAN BERGARANSI, SERTA MEMILIKI HARGA TERJANGKAU DAN KUALITAS YANG BAIK.</p>
+  </header>
+
+  <!-- Bottom menu, produk, modal, popup, dll tetap seperti HTML asli -->
+  <div class="bottom-menu">
+    <a href="#produk1" class="menu-btn red">List 1</a>
+    <a href="#produk2" class="menu-btn darkred">List 2</a>
+    <button class="menu-btn blue" onclick="openPopup('paymentPopup')">QRIS</button>
+    <button class="menu-btn black" onclick="openPopup('contactPopup')">Kontak</button>
+  </div>
+
+  <h2>LIST PRODUK PANEL PTERODACTYLE TANAKA STORE</h2>
+  <div class="list-produk-1" id="produk1"></div>
+
+  <hr>
+
+  <h2>LIST ALL PRODUK TANAKA STORE</h2>
+  <div class="produk-2-container" id="produk2"></div>
+
+  <!-- Modal Produk -->
+  <div id="produkModal">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeModal()">×</button>
+      <img id="modalImg" src="">
+      <h3 id="modalNama"></h3>
+      <p class="harga" id="modalHarga"></p>
+      <ul id="modalKeterangan"></ul>
+      <div class="btn-container">
+        <a href="https://wa.me/6285142149762" target="_blank">💬 WhatsApp</a>
+        <a href="https://chat.whatsapp.com/JWxpX6ilreu9l9exWUNfwM">👥 Group TRX</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Popup QRIS & Kontak -->
+  <div id="paymentPopup" class="overlay">
+    <div class="popup">
+      <h2>QRIS Pembayaran</h2>
+      <a href="-" target="_blank" class="btn">Dana</a>
+      <a href="-" download class="btn">CHAT ADMIN</a>
+      <button class="close-btn" onclick="closePopup('paymentPopup')">Tutup</button>
+    </div>
+  </div>
+  <div id="contactPopup" class="overlay">
+    <div class="popup">
+      <h2>Kontak TANAKA STORE</h2>
+      <a href="https://wa.me/6285142149762" target="_blank" class="btn">📱 WhatsApp</a>
+      <a href="https://chat.whatsapp.com/HqmyuVHlHG2LQtLuHMPJhZ?mode=ems_copy_c" target="_blank" class="btn">👥 Group Transaksi</a>
+      <button class="close-btn" onclick="closePopup('contactPopup')">Tutup</button>
+    </div>
+  </div>
+
+  <div class="bottom-container">
+    <button class="bottom-button-neon" onclick="window.open('https://whatsapp.com/channel/0029VbAhtJAGOj9rC9IigO16','_blank')">
+      SALURAN TESTIMONI 
+    </button>
+    <p class="bottom-thanks">THANKS FOR ALL</p>
+  </div>
+</div>
+
+<script>
+/* ===== Preloader ===== */
+window.addEventListener('load',()=>{
+  setTimeout(()=>{
+    document.getElementById('preloader').style.display='none';
+    document.getElementById('content').style.display='block';
+    initStars();
+    renderProduk(produk1Data,'produk1');
+    renderProduk(produk2Data,'produk2');
+  },3000);
+});
+
+/* ===== Stars ===== */
+function initStars(){
+  const starsContainer=document.getElementById('stars');
+  for(let i=0;i<100;i++){
+    const star=document.createElement('div'); star.classList.add('star'); star.style.top=Math.random()*100+'%'; star.style.left=Math.random()*100+'%';
+    let size=Math.random()*2+1; star.style.width=star.style.height=size+'px'; star.style.animationDuration=(Math.random()*3+1)+'s';
+    starsContainer.appendChild(star);
+  }
+}
+
+/* ===== Produk ===== */
+const produk1Data=[
+  {nama:"Panel 1GB", img:"https://files.catbox.moe/mln47y.jpeg", harga:"Rp 500", keterangan:["PERMANENT","ANTI PTPT","ANTI DDOS","ANTI DELL","ANTI COLONG","GARANSI 10HOURS"]},
+{nama:"Panel 2GB", img:"https://files.catbox.moe/mln47y.jpeg", harga:"Rp 1.000", keterangan:["PERMANENT","ANTI PTPT","ANTI DDOS","ANTI DELL","ANTI COLONG","GARANSI 10HOURS"]},
+{nama:"Panel 3GB", img:"https://files.catbox.moe/mln47y.jpeg", harga:"Rp 1.500", keterangan:["PERMANENT","ANTI PTPT","ANTI DDOS","ANTI DELL","ANTI COLONG","GARANSI 10HOURS"]},
+{nama:"Panel 4GB", img:"https://files.catbox.moe/mln47y.jpeg", harga:"Rp 2.000", keterangan:["PERMANENT","ANTI PTPT","ANTI DDOS","ANTI DELL","ANTI COLONG","GARANSI 10HOURS"]},
+{nama:"Panel 5GB", img:"https://files.catbox.moe/mln47y.jpeg", harga:"Rp 2.500", keterangan:["PERMANENT","ANTI PTPT","ANTI DDOS","ANTI DELL","ANTI COLONG","GARANSI 10HOURS"]},
+{nama:"Panel 6GB", img:"https://files.catbox.moe/mln47y.jpeg", harga:"Rp 3.000", keterangan:["PERMANENT","ANTI PTPT","ANTI DDOS","ANTI DELL","ANTI COLONG","GARANSI 10HOURS"]},
+{nama:"Panel 7GB", img:"https://files.catbox.moe/mln47y.jpeg", harga:"Rp 3.500", keterangan:["PERMANENT","ANTI PTPT","ANTI DDOS","ANTI DELL","ANTI COLONG","GARANSI 10HOURS"]},
+{nama:"Panel 8GB", img:"https://files.catbox.moe/mln47y.jpeg", harga:"Rp 4.000", keterangan:["PERMANENT","ANTI PTPT","ANTI DDOS","ANTI DELL","ANTI COLONG","GARANSI 10HOURS"]},
+{nama:"Panel 9GB", img:"https://files.catbox.moe/mln47y.jpeg", harga:"Rp 4.500", keterangan:["PERMANENT","ANTI PTPT","ANTI DDOS","ANTI DELL","ANTI COLONG","GARANSI 10HOURS"]},
+{nama:"Panel UNLI", img:"https://files.catbox.moe/mln47y.jpeg", harga:"Rp 7.000", keterangan:["ANTI PTPT","ANTI DDOS","ANTI DELL","ANTI COLONG","GARANSI 10HOURS"]},
+{nama:"Panel UNLI PERMANENT", img:"https://files.catbox.moe/mln47y.jpeg", harga:"Rp 10.000", keterangan:["PERMANENT","ANTI PTPT","ANTI DDOS","ANTI DELL","ANTI COLONG","GARANSI 10HOURS"]}
+];
+
+const produk2Data=[
+{nama:"RESLLER PANEL", img:"https://files.catbox.moe/mln47y.jpeg", harga:"Rp 12.000", keterangan:["PERMANENT","PRIVATE","ANTI RUSUH","BISA JUAL PANEL"]},
+{nama:"ADMIN PANEL", img:"https://files.catbox.moe/mln47y.jpeg", harga:"Rp 15.000", keterangan:["PERMANENT","ANTI HB","FRESH","AMAN","ANTI KENON","BISA OPEN RESELLER PANEL","BISA JUAL PANEL 1GB-UNLI"]},
+{nama:"PT PANEL", img:"https://files.catbox.moe/mln47y.jpeg", harga:"Rp 5.000", keterangan:["PERMANENT","ANTI HB","FRESH","AMAN","ANTI KENON","BISA OPEN RESELLER PANEL","BISA JUAL PANEL 1GB-UNLI","BISA OPEN ADMIN PANEL"]},
+{nama:"OWN PANEL", img:"https://files.catbox.moe/mln47y.jpeg", harga:"Rp 6.000", keterangan:["PERMANENT","ANTI HB","FRESH","AMAN","ANTI KENON","BISA OPEN RESELLER PANEL","BISA JUAL PANEL 1GB-UNLI","BISA OPEN ADMIN PANEL","BISA OPEN PT PANEL"]},
+{nama:"TANGAN KANAN PANEL", img:"https://files.catbox.moe/mln47y.jpeg", harga:"Rp 20.000", keterangan:["PERMANENT","ANTI HB","FRESH","AMAN","ANTI KENON","BISA OPEN RESELLER PANEL","BISA JUAL PANEL 1GB-UNLI","BISA OPEN ADMIN PANEL","BISA OPEN PT PANEL","BISA OPEN OWN PANEL"]},
+{nama:"PT PRIBADI", img:"https://files.catbox.moe/mln47y.jpeg", harga:"Rp 10.000", keterangan:["PERMANENT","ANTI HB","FRESH","AMAN","ANTI KENON","BISA OPEN RESELLER PANEL","BISA JUAL PANEL 1GB-UNLI","BISA OPEN ADMIN PANEL","BISA OPEN PT PANEL","BISA OPEN TANGAN KANAN PANEL","FREE BANYAK BENEFIT"]},
+{nama:"OWN JS PRIV", img:"https://files.catbox.moe/mln47y.jpeg", harga:"Rp 15.000", keterangan:["PERMANENT","ANTI CD","ANTI BOT OFF","DI SHARE KE 150+ CH","JAMIN CAIR","GB SENDIRI"]},
+{nama:"OWN JS PUB", img:"https://files.catbox.moe/mln47y.jpeg", harga:"Rp 10.000", keterangan:["PERMANENT","DI SHARE KE 150+ CH","JAMIN CAIR"]}
+];
+
+function renderProduk(data, containerId){
+  const container=document.getElementById(containerId);
+  data.forEach(p=>{
+    const div=document.createElement('div');
+    div.className='produk';
+    div.innerHTML=`<div class="neon-glow"></div><img src="${p.img}" alt="${p.nama}"><p>${p.nama}</p><p class="harga">${p.harga}</p>`;
+    container.appendChild(div);
+    div.addEventListener('click',()=>{
+      document.getElementById('modalImg').src=p.img;
+      document.getElementById('modalNama').textContent=p.nama;
+      document.getElementById('modalHarga').textContent=p.harga;
+      const keteranganEl=document.getElementById('modalKeterangan');
+      keteranganEl.innerHTML="";
+      p.keterangan.forEach(item=>{const li=document.createElement('li'); li.textContent=item; keteranganEl.appendChild(li);});
+      document.getElementById('produkModal').classList.add('active');
+    });
+  });
+}
+
+function closeModal(){document.getElementById('produkModal').classList.remove('active');}
+function openPopup(id){document.getElementById(id).style.display="flex";}
+function closePopup(id){document.getElementById(id).style.display="none";}
+
+/* ===== Neon Glow Produk Hover ===== */
+document.addEventListener("mousemove", function(e){
+  document.querySelectorAll('.produk').forEach(prod=>{
+    const glow=prod.querySelector('.neon-glow');
+    const rect=prod.getBoundingClientRect();
+    const x=e.clientX-rect.left;
+    const y=e.clientY-rect.top;
+    glow.style.transform=`translate(${x-rect.width/2}px, ${y-rect.height/2}px)`;
+  });
+});
+</script>
+
+</body>
+</html>
